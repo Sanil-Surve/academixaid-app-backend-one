@@ -51,7 +51,28 @@ const getAnswerFromDatabase = async (req, res) => {
   }
 };
 
+const getSuggestions = async (req, res) => {
+  const { question } = req.body;
+  try {
+    // Retrieve existing questions from the database
+    const existingQuestions = await Question.find({}, 'question');
+
+    // Filter suggestions based on similarities with existing questions
+    const suggestions = existingQuestions
+      .map(existingQuestion => existingQuestion.question)
+      .filter(existingQuestion =>
+        existingQuestion.toLowerCase().includes(question.toLowerCase())
+      );
+
+    res.json({ suggestions });
+  } catch (error) {
+    console.error("Error fetching suggestions:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   submitQuestion,
   getAnswerFromDatabase,
+  getSuggestions
 };
