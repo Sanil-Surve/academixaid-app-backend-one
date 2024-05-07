@@ -35,7 +35,7 @@ const server = require('http').Server(app);
 const io = socketio(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://academixaid.vercel.app",
+    origin: "https://www.academixaid.site",
   }
 });
 const userRouter = require("./routes/user");
