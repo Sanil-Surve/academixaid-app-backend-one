@@ -1,16 +1,20 @@
-const OpenAI = require('openai');
-const Question = require('../models/Question');
+const OpenAI = require("openai");
+const Question = require("../models/Question");
 
 const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY
+  apiKey: process.env.OPEN_AI_API_KEY,
 });
 
 async function getAnswer(question) {
   const chatCompletion = await openai.chat.completions.create({
     messages: [
-      { role: 'user', content: `Give Answer of this question: ${question}` },
+      // { role: 'user', content: `Give Answer of this question: ${question}` },
+      {
+        role: "user",
+        content: `Please answer the following question in detail: ${question}. Make sure to address the following points: 1) Historical context, 2) Current implications, 3) Future predictions.`,
+      },
     ],
-    model: 'gpt-3.5-turbo',
+    model: "gpt-3.5-turbo",
   });
 
   return chatCompletion.choices[0].message.content;
@@ -29,8 +33,8 @@ async function submitQuestion(req, res) {
 
     res.json({ answer });
   } catch (error) {
-    console.error('Error processing question:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error processing question:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -55,12 +59,12 @@ const getSuggestions = async (req, res) => {
   const { question } = req.body;
   try {
     // Retrieve existing questions from the database
-    const existingQuestions = await Question.find({}, 'question');
+    const existingQuestions = await Question.find({}, "question");
 
     // Filter suggestions based on similarities with existing questions
     const suggestions = existingQuestions
-      .map(existingQuestion => existingQuestion.question)
-      .filter(existingQuestion =>
+      .map((existingQuestion) => existingQuestion.question)
+      .filter((existingQuestion) =>
         existingQuestion.toLowerCase().includes(question.toLowerCase())
       );
 
@@ -74,5 +78,5 @@ const getSuggestions = async (req, res) => {
 module.exports = {
   submitQuestion,
   getAnswerFromDatabase,
-  getSuggestions
+  getSuggestions,
 };
