@@ -36,7 +36,7 @@ exports.userSignIn = async (req, res) => {
   if (!isMatch)
     return res.json({
       success: false,
-      message: 'email / Password does not Match!',
+      message: 'Email / Password does not Match!',
     });
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
