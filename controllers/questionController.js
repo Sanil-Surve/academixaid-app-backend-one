@@ -50,7 +50,7 @@ const getAnswerFromDatabase = async (req, res) => {
     const answer = result.answer;
     res.json({ answer });
   } catch (error) {
-    console.error("Error fetching answer from database:", error.message);
+    console.error("Error fetching Answer from database:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
