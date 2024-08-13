@@ -8,11 +8,7 @@ const openai = new OpenAI({
 async function getAnswer(question) {
   const chatCompletion = await openai.chat.completions.create({
     messages: [
-      // { role: 'user', content: `Give Answer of this question: ${question}` },
-      {
-        role: "user",
-        content: `Please analyze and provide a thorough explanation for the following question: ${question}. Your answer should be clear, concise, and cover all necessary aspects of the topic.`,
-      },
+      { role: 'user', content: `Give Answer of this question: ${question}` },
     ],
     model: "gpt-3.5-turbo",
   });
