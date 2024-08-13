@@ -11,7 +11,7 @@ async function getAnswer(question) {
       // { role: 'user', content: `Give Answer of this question: ${question}` },
       {
         role: "user",
-        content: `Please answer the following question in detail: ${question}. Make sure to address the following points: 1) Historical context, 2) Current implications, 3) Future predictions.`,
+        content: `Please analyze and provide a thorough explanation for the following question: ${question}. Your answer should be clear, concise, and cover all necessary aspects of the topic.`,
       },
     ],
     model: "gpt-3.5-turbo",
